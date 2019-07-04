@@ -153,3 +153,22 @@ function miniMaxSum(arr) {
 // miniMaxSum([1,2,3,7,-1])
 
 // Birthday cake candles
+
+function birthdayCakeCandles(ar) {
+  // first I would find greatest number in ar
+  let tallest = 0;
+  let count = 0;
+  for (let i = 0; i < ar.length; i++) {
+    if (ar[i] > tallest) {
+      tallest = ar[i]
+    }
+  }
+  for (let i = 0; i < ar.length; i++) {
+    if (ar[i] == tallest) {
+      count++
+    }
+  }
+  return count
+}
+const bdayArray = [3,1,5,5,3,4]
+console.log(birthdayCakeCandles(bdayArray))
