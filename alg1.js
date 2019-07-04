@@ -170,5 +170,29 @@ function birthdayCakeCandles(ar) {
   }
   return count
 }
-const bdayArray = [3,1,5,5,3,4]
-console.log(birthdayCakeCandles(bdayArray))
+// const bdayArray = [3,1,5,5,3,4]
+// console.log(birthdayCakeCandles(bdayArray))
+
+const time = "12:05:45AM"
+function timeConversion(s) {
+  /*
+   * Write your code here.
+   */
+  let t = s.slice(0, -2)
+  const suffix = s.slice(8)
+  let a = t.split(':')
+  if(suffix == 'PM' && a[0] != '12') {
+    a[0] = parseInt(a[0]) + 12
+    return a.join(':')
+  }
+  if (suffix == 'AM' && t == "12:00:00") {
+    return "00:00:00"
+  }
+  if(suffix == "AM" && a[0] == '12') {
+    a[0] = '00'
+    return a.join(':')
+  }
+  return t
+}
+
+console.log(timeConversion(time))
