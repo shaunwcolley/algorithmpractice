@@ -195,4 +195,196 @@ function timeConversion(s) {
   return t
 }
 
-console.log(timeConversion(time))
+// console.log(timeConversion(time))
+
+function countApplesAndOranges(s, t, a, b, apples, oranges) {
+
+  function calcLanding(array, tree) {
+    return array.map(location => {
+      return tree + location
+    })
+  }
+
+  function countOnHouse (locations, houseStart, houseEnd) {
+    let fruitsOnHouse = 0;
+    for(let i = 0; i < locations.length; i++) {
+      if(locations[i] >= s && locations[i] <= t) {
+        fruitsOnHouse++;
+      }
+    }
+    return fruitsOnHouse;
+  }
+
+
+  let appleLanding = calcLanding(apples, a)
+  let orangeLanding = calcLanding(oranges, b)
+
+  let applesOnHouse = countOnHouse(appleLanding, s, t);
+  let orangesOnHouse = countOnHouse(orangeLanding, s, t);
+
+  console.log(applesOnHouse);
+  console.log(orangesOnHouse);
+}
+//
+// countApplesAndOranges(7, 11, 5, 15, [-2,2,1], [5,-6])
+
+function kangaroo(x1, v1, x2, v2) {
+  let cross = false;
+  let startDistance = Math.abs(x2 - x1)
+  while (!cross) {
+    x1 += v1
+    x2 += v2
+    //calculate absolute because difference could be negative for a long time, i.e, second could start a really long way ahead of first
+    let newDistance = Math.abs(x2 - x1)
+    if (newDistance >= startDistance) {
+      cross = true;
+      return 'NO'
+    }
+    if(x1 === x2) {
+      cross = true;
+      return 'YES'
+    }
+  }
+}
+
+// will cross paths: 0 3 4 2
+// will not: 0 2 5 3
+// console.log(kangaroo(0, 2, 5, 3))
+// console.log(kangaroo(7271, 2211, 7915, 2050))
+// console.log(kangaroo(28, 8, 96, 2))
+
+function findNumber(arr, k) {
+    for(let i = 0; i < arr.length; i++) {
+        if(k === arr[i]) {
+            return 'YES'
+        }
+    }
+    return 'NO'
+}
+
+function oddNumbers(l, r) {
+    odds = []
+    for(let i = l; i < r + 1 ; i++){
+        if(i%2 !== 0) {
+            odds.push(i)
+        }
+    }
+    return odds
+}
+
+// console.log(oddNumbers(2,5))
+
+
+function calculatePath(firstPath, secondPath) {
+  let first = firstPath.split('/');
+  let second = secondPath.split('/');
+  if(first.length > second.length) {
+     return '..'
+  }
+  if(first[1] == second[1]) {
+    let path = []
+     second.forEach((part, index) => {
+      if(index > 1) {
+        return path.push(part)
+      }
+    })
+    return path.join('/')
+  }
+  if(first.length == second.length){
+    return '../' + second[second.length - 1]
+  }
+  if(second.length > first.length) {
+    let path = []
+     second.forEach((part, index) => {
+      if(index > 1) {
+        return path.push(part)
+      }
+    })
+    return '../' + path.join('/')
+  }
+  return second[second.length - 1];
+}
+// console.log(calculatePath(a,b))
+
+function calcPath(firstPath, secondPath) {
+  let first = firstPath.split('/');
+  let second = secondPath.split('/');
+  let path = []
+  function checkPath(firstArray, secondArray, array) {
+    for(let i = 0; i < firstArray.length || i < secondArray.length; i ++) {
+      if(firstArray[i] != secondArray[i] && secondArray[i] != undefined) {
+        for(i; i < secondArray.length; i++) {
+          array.push(second[i])
+        }
+      }
+    }
+    return array
+  }
+  let dots = Math.abs(first.length - second.length)
+  // checking if first is longer than second and that last one in second is not same as one in position in first
+  if(first.length > second.length && first[first.length - (dots + 1)] != second[second.length - 1]) {
+    for(let i = 0; i < dots; i++) {
+      path.push('..')
+    }
+    path = checkPath(first, second, path)
+    return path.join('/')
+  }
+  // first longer than second and no need to move down
+  if(first.length > second.length) {
+    for(let i = 0; i < dots; i++) {
+      path.push('..')
+    }
+    return path.join('/')
+  }
+  // checking if second is longer than first and that last one in first is not same as one in position in second
+  if(second.length > first.length && first[first.length - 1] != second[second.length - (dots + 1)]) {
+    for(let i = 0; i < dots; i++) {
+      path.push('..')
+    }
+    path = checkPath(first, second, path)
+    return path.join('/')
+  }
+  // second longer than first just need to move up
+  if(second.length > first.length) {
+    path = checkPath(first, second, path)
+    return path.join('/')
+  }
+  // checking if same length
+  if(first.length == second.length) {
+    for(let i = 0; i < first.length; i++) {
+      if(first[i] != second[i]) {
+        path.push('..')
+      }
+    }
+    path = checkPath(first, second, path)
+    return path.join('/')
+  }
+}
+
+// need to check at what point a and b are no longer the same and the put dots and rest of b
+let a = '/foo/baz/baz'
+let b = '/foo/baz'
+function calcPathTwo(firstPath, secondPath) {
+  let first = firstPath.split('/');
+  let second = secondPath.split('/');
+  function checkIndex (one, two) {
+    for(let i = 0; i < one.length || i < two.length; i++) {
+      if(first[i] != second[i])
+      return i
+    }
+  }
+  function addParts(index, one, two) {
+    let array = []
+    for(let j = index; j < one.length; j++) {
+      array.push('..')
+    }
+    for(let i = index; i < two.length; i++) {
+      array.push(second[i])
+    }
+    return array
+  }
+  let i = checkIndex(first,second)
+  return addParts(i, first, second).join('/')
+}
+
+// console.log(calcPathTwo(a,b))
