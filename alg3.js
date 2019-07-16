@@ -79,5 +79,50 @@ const inFib = (n, a=0, b=1) => {
   return inFib(n, b, a+b);
 }
 
-console.log(inFib(10946))
+// console.log(inFib(10946))
+
 //dynamic Programming of fibonacci
+
+// This is an example of dynamic programming with retrun fibonacci
+
+let f = [0,1]
+
+const dynamicFib = (n) => {
+  if(f[n]) return f[n];
+  for (let i = 0; i < n; i ++) {
+    f.push(f[i] + f[i+1])
+  }
+  return f[n]
+}
+
+// this seems the most costly to do a check, it seems better to do a simple for loop, unless size of data stored is huge.
+const dynamicFibCheck = (n) => {
+  console.log(f.length)
+  for(let i = 0; i < f.length; i++) {
+    console.log(f[i])
+    if(f[i] === n) {
+      return true
+    }
+  }
+  if(f[f.length-1] > n){
+    return false
+  }
+  let a = f[f.length-2];
+  let b = f[f.length-1];
+  for(let i = f.length; i < n; i++) {
+    console.log(f[i-1])
+    if(n === b) return true;
+    if (b > n) return false;
+    let temp = b;
+    b = a + b;
+    a = temp;
+    f[i] = b
+  }
+}
+// because it takes a little time to modify the array we must wait for result to finish
+(async () => {
+  let answer = await dynamicFib(2)
+  let checkAnswer = dynamicFibCheck(11)
+  console.log(checkAnswer)
+})()
+.then()
