@@ -12,3 +12,12 @@ def compareTriplets(a, b):
     return result
 
 # print compareTriplets(bob,alice)
+
+
+# reverse array in python
+
+def reverseArray(a):
+    for i in range(len(a)-1, -1, -1):
+        print a[i]
+
+reverseArray([1,4,3,2])

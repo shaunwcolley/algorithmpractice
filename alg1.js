@@ -363,14 +363,13 @@ function calcPath(firstPath, secondPath) {
 
 // need to check at what point a and b are no longer the same and the put dots and rest of b
 let a = '/foo/baz/baz'
-let b = '/foo/baz'
+let b = '/foo/baz/bar/baz'
 function calcPathTwo(firstPath, secondPath) {
   let first = firstPath.split('/');
   let second = secondPath.split('/');
   function checkIndex (one, two) {
     for(let i = 0; i < one.length || i < two.length; i++) {
-      if(first[i] != second[i])
-      return i
+      if(one[i] != two[i]) return i;
     }
   }
   function addParts(index, one, two) {
@@ -387,4 +386,4 @@ function calcPathTwo(firstPath, secondPath) {
   return addParts(i, first, second).join('/')
 }
 
-// console.log(calcPathTwo(a,b))
+console.log(calcPathTwo(a,b))
